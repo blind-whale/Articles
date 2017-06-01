@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">article</string>
+    <string name="toast_network_info1">网络连接失败，请检查网络设置！</string>
+    <string name="toast_network_info2">网络连接成功</string>
+
+    <style name="test">""</style>
+</resources>
