@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import me.kaohongshu.article.model.retrofit.service.bean.Article;
 import me.kaohongshu.article.ui.adapter.ArticleAdapter;
 import me.kaohongshu.article.ui.base.NetworkBaseActivity;
@@ -19,9 +20,11 @@ import me.kaohongshu.article.util.ToastUtil;
 
 public class MainActivity extends NetworkBaseActivity {
 
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    ArticleAdapter adapter;
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
+    ArticleAdapter adapter;
     List<Article> articles = new ArrayList<Article>();
 
     @Override
@@ -41,17 +44,17 @@ public class MainActivity extends NetworkBaseActivity {
         return R.layout.activity_main;
     }
 
-    private void initToolbar(){
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+    private void initToolbar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white,null));
-        }else{
+            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white, null));
+        } else {
             toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         }
         setSupportActionBar(toolbar);
     }
 
     private boolean isLoading = false;
+
     private void initView() {
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -79,10 +82,10 @@ public class MainActivity extends NetworkBaseActivity {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisiblePosition = llm.findLastVisibleItemPosition();
                 if (lastVisiblePosition + 1 == adapter.getItemCount()) {
-//                    if(refreshLayout.isRefreshing()){
+                    if (refreshLayout.isRefreshing()) {
 //                        adapter.notifyItemRemoved(adapter.getItemCount());
-//                        return;
-//                    }
+                        return;
+                    }
                     if (!isLoading) {
                         isLoading = true;
                         loadData();
@@ -116,7 +119,12 @@ public class MainActivity extends NetworkBaseActivity {
             articles.addAll(list);
             adapter.notifyDataSetChanged();
         }
-//        ToastUtil.shortToast("加载了"+list.size()+"条数据",app);
+        refreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onCustomError(int errorCode, String errorInfo, int apiIndex) {
+        super.onCustomError(errorCode, errorInfo, apiIndex);
         refreshLayout.setRefreshing(false);
     }
 

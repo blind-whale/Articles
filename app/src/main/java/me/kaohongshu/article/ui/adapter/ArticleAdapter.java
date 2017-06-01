@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.kaohongshu.article.R;
 import me.kaohongshu.article.model.DataManager;
 import me.kaohongshu.article.model.retrofit.service.bean.Article;
@@ -79,18 +81,18 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public static class ArticleHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.iv)
         ImageView img;
+        @BindView(R.id.title_tv)
         TextView titleTv;
+        @BindView(R.id.webname_tv)
         TextView webnameTv;
+        @BindView(R.id.time_tv)
         TextView timeTv;
 
         public ArticleHolder(View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.iv);
-            titleTv = (TextView) itemView.findViewById(R.id.title_tv);
-            webnameTv = (TextView) itemView.findViewById(R.id.webname_tv);
-            timeTv = (TextView) itemView.findViewById(R.id.time_tv);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 

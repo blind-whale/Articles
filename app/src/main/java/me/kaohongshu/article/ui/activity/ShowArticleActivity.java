@@ -33,22 +33,22 @@ public class ShowArticleActivity extends WebviewBaseActivity {
     public static String EXTRA_ARTICLE = "article";
 
     Article article;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        article=(Article)getIntent().getSerializableExtra(EXTRA_ARTICLE);
+        article = (Article) getIntent().getSerializableExtra(EXTRA_ARTICLE);
 
         initView();
         initToobar();
     }
 
     private void initToobar() {
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle(article.getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             toolbar.setTitleTextColor(getColor(android.R.color.white));
-        }else{
+        } else {
             toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         }
         setSupportActionBar(toolbar);
@@ -59,7 +59,7 @@ public class ShowArticleActivity extends WebviewBaseActivity {
         return R.layout.activity_show_article;
     }
 
-    private void initView(){
+    private void initView() {
         webView.loadUrl(article.getBody());
     }
 

@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 
 import java.util.HashMap;
 
+import butterknife.BindView;
 import me.kaohongshu.article.R;
 import me.kaohongshu.article.util.LogUtil;
 
@@ -24,13 +25,13 @@ import me.kaohongshu.article.util.LogUtil;
  */
 
 public abstract class WebviewBaseActivity extends NetworkBaseActivity {
+    @BindView(R.id.webview)
     public WebView webView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        webView=(WebView)findViewById(R.id.webview);
         configWebView();
     }
 

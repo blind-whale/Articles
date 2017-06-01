@@ -53,7 +53,7 @@ public abstract class NetworkBaseActivity extends BaseActivity implements DataMa
 
     @Override
     public void onFail(Throwable t, int code, String errorInfo, int apiIndex) {
-
+        onCustomError(code, errorInfo, apiIndex);
     }
 
     public void onLoadData(Object o, int apiIndex) {
