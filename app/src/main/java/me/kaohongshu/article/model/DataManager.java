@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,12 +47,12 @@ public class DataManager {
 
     public void getArticleList(int page, final ResultListener<Result> listener,final int apiIndex){
         ArticleService service = httpHelper.getApiService(ArticleService.class);
-        Call<Result<List<Article>>> call = service.loadArticleList(page);
-        call.enqueue(new Callback<Result<List<Article>>>() {
+        Call<Result<Article>> call = service.loadArticleList(page);
+        call.enqueue(new Callback<Result<Article>>() {
             @Override
-            public void onResponse(Call<Result<List<Article>>> call, Response<Result<List<Article>>> response) {
+            public void onResponse(Call<Result<Article>> call, Response<Result<Article>> response) {
                 if(response.isSuccessful()){
-                    Result<List<Article>> result = response.body();
+                    Result<Article> result = response.body();
                     if(result.getStatus()==1){
                         LogUtil.e("retrofit","loadArticleList success: "+(result.getData()==null?"0":result.getData().size()));
                     }else{
@@ -70,17 +71,11 @@ public class DataManager {
             }
 
             @Override
-            public void onFailure(Call<Result<List<Article>>> call, Throwable t) {
+            public void onFailure(Call<Result<Article>> call, Throwable t) {
                 LogUtil.e("retrofit",t.toString());
                 t.printStackTrace();
             }
         });
-    }
-
-    public static void loadImg(Context context, String url, ImageView imageView){
-        Glide.with(context)
-                .load(url)
-                .into(imageView);
     }
 
     public static interface ResultListener<T>{

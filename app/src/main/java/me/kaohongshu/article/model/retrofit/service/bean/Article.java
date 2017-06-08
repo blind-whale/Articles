@@ -26,12 +26,15 @@ public class Article extends Bean {
     private String title;
     private String created_at;
     private String thumb_image;
-    private Object category;
+    private String images;
+    private String category;
     private String is_hot;
     private String tag;
     private String body;
     private String web_name;
+    private String web_logo;
     private String origin_url;
+    private String des;
 
     public int getArticle_id() {
         return article_id;
@@ -61,15 +64,23 @@ public class Article extends Bean {
         return thumb_image;
     }
 
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
     public void setThumb_image(String thumb_image) {
         this.thumb_image = thumb_image;
     }
 
-    public Object getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Object category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -105,12 +116,28 @@ public class Article extends Bean {
         this.web_name = web_name;
     }
 
+    public String getWeb_logo() {
+        return web_logo;
+    }
+
+    public void setWeb_logo(String web_logo) {
+        this.web_logo = web_logo;
+    }
+
     public String getOrigin_url() {
         return origin_url;
     }
 
     public void setOrigin_url(String origin_url) {
         this.origin_url = origin_url;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
     }
 
     @Override

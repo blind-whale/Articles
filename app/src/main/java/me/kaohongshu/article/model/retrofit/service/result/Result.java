@@ -1,6 +1,7 @@
 package me.kaohongshu.article.model.retrofit.service.result;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Author: shichunxiang
@@ -11,7 +12,7 @@ public class Result<T> implements Serializable {
     private int status;
     private int errorCode;
     private String errorInfo;
-    private T data;
+    private List<T> data;
 
     public int getStatus() {
         return status;
@@ -37,11 +38,11 @@ public class Result<T> implements Serializable {
         this.errorInfo = errorInfo;
     }
 
-    public T getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

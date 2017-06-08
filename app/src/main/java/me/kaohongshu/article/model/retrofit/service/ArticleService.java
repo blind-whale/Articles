@@ -20,7 +20,7 @@ import retrofit2.http.Query;
 public interface ArticleService {
     String end_point = "http://101.200.34.13:8080/tuicool/";
 
-    @GET("result")
-    Call<Result<List<Article>>> loadArticleList(@Query("page") int page);
+    @GET("getArticles")
+    Call<Result<Article>> loadArticleList(@Query("page") int page);
 
 }

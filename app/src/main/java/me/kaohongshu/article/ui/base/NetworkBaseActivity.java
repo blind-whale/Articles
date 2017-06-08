@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 import me.kaohongshu.article.R;
 import me.kaohongshu.article.model.DataManager;
 import me.kaohongshu.article.model.retrofit.service.result.Result;
@@ -56,7 +58,7 @@ public abstract class NetworkBaseActivity extends BaseActivity implements DataMa
         onCustomError(code, errorInfo, apiIndex);
     }
 
-    public void onLoadData(Object o, int apiIndex) {
+    public void onLoadData(List list, int apiIndex) {
 
     }
 

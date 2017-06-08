@@ -6,6 +6,29 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- menu列表的文字颜色为白色-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Toobar 右侧更多menu图标，设置为白色-->
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <style name="ToobarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextAppearance">@style/MenuTextStyle</item>
+        <!--<item name="actionMenuTextColor">@android:color/white</item>-->
+    </style>
+    <style name="MenuTextStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+    <style name="ToobarPopupTheme" parent="ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">?colorAccent</item>
+
+        <!-- 设置menu显示的位置，不覆盖 -->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+    </style>
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
     </style>
 
 </resources>

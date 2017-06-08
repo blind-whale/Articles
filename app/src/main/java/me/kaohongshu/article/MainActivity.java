@@ -1,31 +1,36 @@
 package me.kaohongshu.article;
 
-import android.os.Build;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import me.kaohongshu.article.model.ImageManager;
 import me.kaohongshu.article.model.retrofit.service.bean.Article;
 import me.kaohongshu.article.ui.adapter.ArticleAdapter;
-import me.kaohongshu.article.ui.base.NetworkBaseActivity;
-import me.kaohongshu.article.util.ToastUtil;
+import me.kaohongshu.article.ui.base.SwipeBaseActivity;
 
-public class MainActivity extends NetworkBaseActivity {
+public class MainActivity extends SwipeBaseActivity {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.refresh_layout)
-    SwipeRefreshLayout refreshLayout;
+
+    @BindView(R.id.drawer)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
     ArticleAdapter adapter;
     List<Article> articles = new ArrayList<Article>();
+    LinearLayoutManager llm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +38,9 @@ public class MainActivity extends NetworkBaseActivity {
 
         initToolbar();
         initView();
+        initDrawer();
 
-        refreshLayout.setRefreshing(true);
-        pageNum = 0;
-        loadData();
+        loadData(1);
     }
 
     @Override
@@ -45,11 +49,7 @@ public class MainActivity extends NetworkBaseActivity {
     }
 
     private void initToolbar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white, null));
-        } else {
-            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        }
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
     }
 
@@ -58,74 +58,68 @@ public class MainActivity extends NetworkBaseActivity {
     private void initView() {
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        final LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
         adapter = new ArticleAdapter(this, articles);
         recyclerView.setAdapter(adapter);
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_red_dark);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                pageNum = 0;
-                loadData();
-            }
-        });
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int lastVisiblePosition = llm.findLastVisibleItemPosition();
-                if (lastVisiblePosition + 1 == adapter.getItemCount()) {
-                    if (refreshLayout.isRefreshing()) {
-//                        adapter.notifyItemRemoved(adapter.getItemCount());
-                        return;
-                    }
-                    if (!isLoading) {
-                        isLoading = true;
-                        loadData();
-                    }
-                }
-            }
-        });
     }
 
-    private int pageNum = 0;
+    private void initDrawer() {
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
 
-    public void loadData() {
-        pageNum++;
-        dataManager.getArticleList(pageNum, this, 1);
-        if (isLoading) isLoading = false;
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        drawerLayout.addDrawerListener(mDrawerToggle);
+
+        // 去除侧边栏滚动条
+        NavigationMenuView menuView = (NavigationMenuView) navView.getChildAt(0);
+        menuView.setVerticalScrollBarEnabled(false);
+
+        View headerView = navView.inflateHeaderView(R.layout.drawer_header);
+        ImageView drawerIcon = (ImageView) headerView.findViewById(R.id.drawer_header_icon);
+        ImageManager.loadCircleImag(app, R.drawable.turbo, drawerIcon);
     }
 
     @Override
-    public void onLoadData(Object o, int apiIndex) {
-        super.onLoadData(o, apiIndex);
-        if (o == null) {
-            pageNum--;
-        }
-        List<Article> list = (List<Article>) o;
-        if (list.size() == 0) {
-            pageNum--;
-        } else {
-            if (pageNum == 1) {
+    public int findLastVisibleItemPosition() {
+        return llm.findLastVisibleItemPosition();
+    }
+
+    public void loadData(int page) {
+        dataManager.getArticleList(page, this, 1);
+    }
+
+    @Override
+    public void onLoadData(List lists, int apiIndex) {
+        super.onLoadData(lists, apiIndex);
+        List<Article> list = (List<Article>) lists;
+        if (list.size() != 0) {
+            for (Article article : list) {
+                if (TextUtils.isEmpty(article.getThumb_image()) && !TextUtils.isEmpty(article.getImages())) {
+                    String[] temp = article.getImages().split(",");
+                    article.setThumb_image(temp[0].replace("[u'", "").replace("']", ""));
+                }
+            }
+            if (page == 1) {
                 articles.clear();
             }
             articles.addAll(list);
             adapter.notifyDataSetChanged();
         }
-        refreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onCustomError(int errorCode, String errorInfo, int apiIndex) {
         super.onCustomError(errorCode, errorInfo, apiIndex);
-        refreshLayout.setRefreshing(false);
     }
 
     /**

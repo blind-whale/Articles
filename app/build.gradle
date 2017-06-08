@@ -3,6 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
+
+    /* 编译时报Not a png错误，加上如下配置 */
+    aaptOptions.cruncherEnabled=false
+    aaptOptions.useNewCruncher=false
+
     defaultConfig {
         applicationId "me.kaohongshu.article"
         minSdkVersion 15
@@ -16,10 +21,23 @@ android {
             }
         }
     }
+    signingConfigs {
+        release {
+            storeFile file("D:\\project\\github\\kaohongshu.keystore.jks")
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     externalNativeBuild {
