@@ -20,6 +20,7 @@
             android:id="@+id/iv_webicon"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:transitionName="web_icon"
             android:layout_centerVertical="true"></ImageView>
 
         <RelativeLayout
@@ -35,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#275B8C"
+                android:transitionName="web_name"
                 android:textSize="@dimen/text_normal" />
 
             <TextView
@@ -121,7 +123,8 @@
             android:maxLines="2"
             android:paddingLeft="@dimen/padding_normal"
             android:textColor="#333333"
-            android:textSize="@dimen/text_big" />
+            android:textSize="@dimen/text_big"
+            android:transitionName="article_title"/>
     </LinearLayout>
 
     <View

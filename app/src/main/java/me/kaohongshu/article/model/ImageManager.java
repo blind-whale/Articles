@@ -41,9 +41,9 @@ public class ImageManager {
     }
 
 
-    public static void loadCircleImag(Context context, int id, ImageView imageView) {
+    public static void loadCircleImag(Context context, Object o, ImageView imageView) {
         Glide.with(context)
-                .load(id)
+                .load(o)
                 .apply(new RequestOptions().circleCrop())
                 .into(imageView);
     }

@@ -4,15 +4,9 @@
 
     <item android:id="@+id/item1"
         android:icon="@drawable/drawer"
-        android:title="@string/app_name">
+        android:title="@string/menu1">
     </item>
     <item android:id="@+id/item2"
         android:icon="@drawable/drawer"
-        android:title="@string/app_name"></item>
-    <item android:id="@+id/item3"
-        android:icon="@drawable/drawer"
-        android:title="@string/app_name"></item>
-    <item android:id="@+id/item4"
-        android:icon="@drawable/drawer"
-        android:title="@string/app_name"></item>
+        android:title="@string/menu2"></item>
 </menu>

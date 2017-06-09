@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!--<item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowExitTransition">@android:transition/slide_left</item>
+        <item name="android:windowEnterTransition">@android:transition/slide_right</item>
+        <item name="android:windowAllowEnterTransitionOverlap">false</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>-->
+
+        <!-- menu列表的文字颜色为白色-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Toobar 右侧更多menu图标，设置为白色-->
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+</resources>

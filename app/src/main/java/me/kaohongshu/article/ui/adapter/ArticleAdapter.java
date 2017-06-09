@@ -1,10 +1,13 @@
 package me.kaohongshu.article.ui.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +34,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int ITEM_TYPE1 = 1;
     private static final int ITEM_TYPE2 = 2;
     List<Article> articles;
-    Context mContext;
+    Activity mContext;
 
-    public ArticleAdapter(Context context, List<Article> articles) {
+    public ArticleAdapter(Activity context, List<Article> articles) {
         this.articles = articles;
         mContext = context;
     }
@@ -106,7 +109,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        public void initView(final Context context, final Article article) {
+        public void initView(final Activity context, final Article article) {
             ImageManager.loadRoundImage(context, article.getWeb_logo(), webIcon);
             webName.setText(article.getWeb_name());
             String temp = "";
@@ -133,7 +136,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ShowArticleActivity.class);
                     intent.putExtra(ShowArticleActivity.EXTRA_ARTICLE, article);
-                    context.startActivity(intent);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options= ActivityOptions.makeSceneTransitionAnimation(context,
+                                new Pair[]{Pair.create(webIcon,"web_icon"),
+                                        Pair.create(webName,"web_name"),
+                                        Pair.create(title,"article_title")});
+                        context.startActivity(intent,options.toBundle());
+                    }else{
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

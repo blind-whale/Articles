@@ -1,18 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:id="@+id/toolbar"
-        android:background="?colorPrimary"
-        >
-    </android.support.v7.widget.Toolbar>
-    <WebView
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginBottom="0dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="?android:actionBarSize"
+                android:paddingBottom="@dimen/padding_normal"
+                android:paddingLeft="@dimen/padding_normal"
+                android:paddingRight="@dimen/padding_normal"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_large"
+                    android:transitionName="article_title" />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/fl_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title"
+                    android:layout_marginTop="@dimen/padding_small"
+                    app:flexWrap="wrap"></com.google.android.flexbox.FlexboxLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                android:background="@color/colorPrimary"
+                app:contentInsetEnd="@dimen/padding_normal"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ToobarPopupTheme">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/back_arrow_white" />
+
+                <ImageView
+                    android:id="@+id/iv_webicon"
+                    android:layout_width="82dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="@dimen/padding_small"
+                    android:transitionName="web_icon" />
+
+                <TextView
+                    android:id="@+id/tv_webname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_small"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_normal"
+                    android:transitionName="web_name" />
+
+                <ImageView
+                    android:id="@+id/iv_share"
+                    android:layout_width="40dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:paddingLeft="@dimen/padding_normal"
+                    android:src="@drawable/share" />
+
+                <ImageView
+                    android:id="@+id/iv_add_collection"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/add_collection" />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/webview"
-        android:layout_below="@+id/toolbar"></WebView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</RelativeLayout>
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"></WebView>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

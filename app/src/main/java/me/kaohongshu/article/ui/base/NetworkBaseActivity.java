@@ -70,9 +70,9 @@ public abstract class NetworkBaseActivity extends BaseActivity implements DataMa
         @Override
         public void onReceive(Context context, Intent intent) {
             if (NetUtil.ACTION_NETWORK_CONNECTED.equals(intent.getAction())) {
-                ToastUtil.shortToast(getString(R.string.toast_network_info2), context);
+                ToastUtil.shortToast(getWindow().getDecorView(),getString(R.string.toast_network_info2));
             } else if (NetUtil.ACTION_NETWORK_DISCONNECTED.equals(intent.getAction())) {
-                ToastUtil.shortToast(getString(R.string.toast_network_info1), context);
+                ToastUtil.shortToast(getWindow().getDecorView(),getString(R.string.toast_network_info1));
             }
         }
     }

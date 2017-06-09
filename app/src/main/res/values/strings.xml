@@ -8,6 +8,7 @@
     <string name="drawer_add_attention">+关注</string>
     <string name="drawer_about_us">关于我们</string>
     <string name="drawer_setup">设置</string>
-    
-    <style name="test">""</style>
+
+    <string name="menu1">在浏览器中打开</string>
+    <string name="menu2">复制网址链接</string>
 </resources>

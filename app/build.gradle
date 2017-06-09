@@ -23,10 +23,6 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("D:\\project\\github\\kaohongshu.keystore.jks")
-            storePassword ""
-            keyAlias ""
-            keyPassword ""
         }
     }
     buildTypes {
@@ -64,4 +60,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC0'
     compile 'com.jakewharton:butterknife:8.6.0'
     compile 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.google.android:flexbox:0.2.6'
 }
